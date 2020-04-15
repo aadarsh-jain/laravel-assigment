@@ -10,14 +10,17 @@ use App\CarbonFootPrintRecord;
 class CarbonFootPrintController extends Controller
 {
     public function index(Request $request){
-
-        //check result in cookie
         $req_para                   = array();
         $req_para['activity']       = $request->activity;
         $req_para['activityType']   = $request->activityType;
         $req_para['country']        = $request->country;
         $req_para['fuelType']       = $request->fuelType;
         $req_para['mode']           = $request->mode;
+
+        //check if request parameter is empty
+        if(empty($req_para['activity']) || empty($req_para['activityType']) || empty($req_para['country']) || (empty($req_para['fuelType']) && empty($req_para['mode']))){
+            return view('welcome');
+        }
 
         $cookie_key = 'carbon_foot_print';
         $res        = '';
